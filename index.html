@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Reference Search</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%; /* Flexible width */
+            max-width: 800px; /* Maximum width */
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-size: 15px;
+            min-width: 240px; /* Minimum width for inputs */
+        }
+
+        input[type="text"]:hover,
+        input[type="date"]:hover,
+        select:hover,
+        input[type="file"]:hover {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap; /* Wraps to the next line on smaller screens */
+            gap: 10px; /* Space between inputs */
+            align-items: center;
+        }
+
+        .form-group > div {
+            flex: 1;
+            min-width: 240px; /* Ensures each input has a minimum width */
+        }
+
+        .button-container {
+            flex: 0 0 auto; /* Button container won't grow */
+        }
+
+        button {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.4s, box-shadow 0.3s;
+            height: 48px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%; /* Make buttons full width on smaller screens */
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #0056b3, #003f88);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .form-group-full {
+            width: 100%;
+        }
+
+        #vipForm {
+            display: none;
+            border-top: 2px solid #007bff;
+            padding-top: 30px;
+            margin-top: 20px;
+        }
+
+        #vipForm.show {
+            display: block;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .button-container {
+            text-align: right;
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+
+            .form-group {
+                flex-direction: column; /* Stack inputs vertically on smaller screens */
+            }
+
+            button {
+                margin-top: 10px; /* Add margin to buttons on small screens */
+            }
+
+            .form-group > div {
+                flex-basis: 100%; /* Make each field take full width */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>VIP Reference Search</h1>
+
+        <!-- Search Form -->
+        <div id="searchForm">
+            <div class="form-group">
+                <div>
+                    <label for="vipReferenceId">VIP Reference ID</label>
+                    <input type="text" id="vipReferenceId" name="vipReferenceId" placeholder="Enter VIP Reference ID">
+                </div>
+                <div class="button-container">
+                    <button type="button" onclick="searchVIP()">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIP Form (Initially Hidden) -->
+        <div id="vipForm">
+            <div class="form-group">
+                <div>
+                    <label for="select">Select</label>
+                    <select id="select">
+                        <option value="">--Select--</option>
+                        <option value="admin">Admin</option>
+                        <option value="techSupport">Tech Support</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter Name">
+                </div>
+                <div>
+                    <label for="letterNo">Letter No</label>
+                    <input type="text" id="letterNo" placeholder="Enter Letter No">
+                </div>
+                <div>
+                    <label for="date">Date</label>
+                    <input type="date" id="date">
+                </div>
+            </div>
+
+            <div class="form-group-full">
+                <label for="addressedTo">Addressed To</label>
+                <input type="text" id="addressedTo" placeholder="Enter Address">
+            </div>
+
+            <div class="form-group-full">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" placeholder="Enter Subject">
+            </div>
+
+            <div class="form-group-full">
+                <label for="remark">Remark</label>
+                <input type="text" id="remark" placeholder="Enter Remark">
+            </div>
+
+            <div class="form-group-full">
+                <label for="document">Document</label>
+                <input type="file" id="document">
+            </div>
+
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to "search" the VIP Reference
+        function searchVIP() {
+            const vipId = document.getElementById('vipReferenceId').value;
+
+            if (vipId === '') {
+                alert('Please enter a VIP Reference ID');
+                return;
+            }
+
+            // Simulate a search by showing the form after a successful "search"
+            const vipForm = document.getElementById('vipForm');
+            vipForm.classList.add('show');
+        }
+    </script>
+
+</body>
+
+</html>
